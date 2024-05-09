@@ -1,2 +1,2 @@
 # TEXchange
-An open forum for posting and voting on ideas.
+An open forum for posting and exchanging ideas.
