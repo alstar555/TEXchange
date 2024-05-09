@@ -14,7 +14,7 @@ app.use(express.json());
 const POST_DB = 'post_db.csv';
 
 const postsMap = new Map();
-const MIN_SCORE = -1;
+const MIN_SCORE = -5;
 
 app.get('/api/posts', (req, res) => {
     const posts = [];
@@ -75,8 +75,15 @@ function savePostToCSV(post, callback) {
 
     // Check if the post ID already exists in the map
     if (postsMap.has(post.postId)) {
-        // Overwrite the existing post data
-        postsMap.delete(post.postId);
+        //Check if vote only went up/down by one
+        if(Math.abs(postsMap.get(post.postId).votes - post.votes)==1){
+            // Overwrite the existing post data
+            postsMap.delete(post.postId);
+        }else{
+            console.log("Hacker alert");
+            return -1;
+        }
+
     } 
     postsMap.set(post.postId, post);
     post.content = `"${post.content.replace(/\n/g, ' ')}"`;
