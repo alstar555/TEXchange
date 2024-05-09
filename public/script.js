@@ -90,8 +90,26 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Function to append post content to the page
     function appendPostToPage(post) {
+
         const postDiv = document.createElement('div');
-        postDiv.innerHTML = `<span class="username"><strong>${post.userId}</strong></span>: ${post.content}<br><span class="timestamp">${post.timestamp}</span>`;
+        const usernameSpan = document.createElement('span');
+        const strongElement = document.createElement('strong');
+        const contentTextNode = document.createTextNode(`${post.content}`);
+        const brElement = document.createElement('br');
+        const timestampSpan = document.createElement('span');
+
+        strongElement.textContent = post.userId;
+        usernameSpan.classList.add('username');
+        usernameSpan.appendChild(strongElement);
+
+        timestampSpan.classList.add('timestamp');
+        timestampSpan.textContent = post.timestamp;
+
+        postDiv.appendChild(usernameSpan);
+        postDiv.appendChild(document.createTextNode(': ')); // Add separator between username and content
+        postDiv.appendChild(contentTextNode);
+        postDiv.appendChild(brElement);
+        postDiv.appendChild(timestampSpan);
 
         // UP/DOWN votes
         const upvoteBtn = document.createElement('button');
