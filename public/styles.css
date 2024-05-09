@@ -1,0 +1,95 @@
+h1 {
+    color: red;
+    font-family: 'Proxima Nova', sans-serif;
+}
+
+
+
+button[type="submit"] {
+    border-radius: 20px;
+    background-color: lightcoral;
+    padding: 5px 10px;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: indianred;
+}
+
+textarea {
+    border-radius: 10px;
+    background-color: #ffe6e6;
+    padding: 10px;
+    border: 1px solid #ccc;
+    width: 50%;
+    box-sizing: border-box;
+    resize: vertical;
+}
+
+textarea:focus {
+    background-color: #ffcccc;
+}
+
+/* Position the form at the bottom of the page */
+form#postForm {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: white; /* Adjust background color if needed */
+    padding: 20px; /* Add padding for better appearance */
+    box-shadow: 0px -5px 10px rgba(0, 0, 0, 0.1); /* Optional: Add shadow for separation */
+}
+
+
+.username {
+    font-weight: bold;
+}
+
+.timestamp {
+    color: gray;
+}
+
+
+
+/*UP VOTE DOWN VOTE BTNS*/
+
+/* Style the upvote button as a rounded triangle pointing upwards */
+/* Style the upvote button as a triangle pointing upwards */
+.upvote-btn {
+    background-color: lightcoral;
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+    border-radius: 0px; /* Rounded corners */
+    width: 16px; /* Adjust width */
+    height: 16px; /* Adjust height */
+    border-width: 0; /* Remove default border */
+    border-style: solid; /* Set border style to solid */
+    border-color: transparent transparent black; /* Set border color (triangle shape) */
+    margin-right: 10000px;
+}
+
+/* Style the downvote button as a triangle pointing downwards */
+.downvote-btn {
+    background-color: lightcoral;
+    clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
+    border-radius: 0px; /* Rounded corners */
+    width: 16px; /* Adjust width */
+    height: 16px; /* Adjust height */
+    border-width: 0; /* Remove default border */
+    border-style: solid; /* Set border style to solid */
+    border-color: black transparent transparent; /* Set border color (triangle shape) */
+}
+
+/* Change button background color on hover */
+.upvote-btn:hover,
+.downvote-btn:hover {
+    background-color: red; 
+}
+
+
+#wordCountDisplay {
+    color: gray; /* Light grey color */
+}
