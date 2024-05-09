@@ -1,7 +1,10 @@
+
 const express = require('express');
 const csv = require('csv-parser');
 const fs = require('fs');
 const path = require('path');
+const rateLimit = require('express-rate-limit');
+
 
 const app = express();
 const PORT = parseInt(process.argv[2]) || 5000;
@@ -15,6 +18,22 @@ const POST_DB = 'post_db.csv';
 
 const postsMap = new Map();
 const MIN_SCORE = -5;
+
+const MIN_WORD_COUNT = 20; 
+const MAX_WORD_COUNT = 1000; 
+const MAX_CHAR_COUNT = 2000; 
+
+
+// Rate limiting configuration
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // limit each IP to 100 requests per windowMs
+  message: { error: 'Too many requests, please try again later.' }
+});
+
+// Apply the rate limiter to all requests
+app.use(limiter);
+
 
 app.get('/api/posts', (req, res) => {
     const posts = [];
@@ -38,9 +57,7 @@ app.get('/api/posts', (req, res) => {
 
             const post_copy = JSON.parse(JSON.stringify(post));
             post_copy.content = `"${post_copy.content.replace(/\n/g, ' ')}"`;
-            if(post_copy.votes >= MIN_SCORE){
-                postsMap.set(post_copy.postId, post_copy);
-            }
+            postsMap.set(post_copy.postId, post_copy);
         })
         .on('end', () => {
             res.json({ posts: posts});
@@ -51,12 +68,30 @@ app.get('/api/posts', (req, res) => {
         });
 });
 
+function checkWordCount(content){
+    const wordCount = content.split(/\s+/).filter(word => word.length > 0).length;
+    return wordCount;
+}
 
-// Endpoint to save a post to CSV
+
 app.post('/savePost', (req, res) => {
     const post = req.body;
 
-    // Example: Save post data to a CSV file
+    // Security checks
+    if (post.content.length >= MAX_CHAR_COUNT) {
+        res.status(400).json({ error: 'Post content exceeds maximum character count' });
+        return;
+    }
+    if (checkWordCount(post.content) >= MAX_WORD_COUNT) {
+        res.status(400).json({ error: 'Post content exceeds maximum word count' });
+        return;
+    }
+    if (checkWordCount(post.content) <= MIN_WORD_COUNT) {
+        res.status(400).json({ error: 'Post content does not meet minimum word count' });
+        return;
+    }
+
+    // Only proceed to savePostToCSV if security checks pass
     savePostToCSV(post, (err) => {
         if (err) {
             console.error('Error saving post to CSV:', err);
@@ -66,6 +101,8 @@ app.post('/savePost', (req, res) => {
         }
     });
 });
+
+
 
 
 // Function to save post data to CSV
@@ -79,17 +116,17 @@ function savePostToCSV(post, callback) {
         if(Math.abs(postsMap.get(post.postId).votes - post.votes)==1){
             // Overwrite the existing post data
             postsMap.delete(post.postId);
-            if(post.votes < MIN_SCORE){
-                return -1;
-            }
         }else{
             console.log("Hacker alert");
             return -1;
         }
 
     } 
-    postsMap.set(post.postId, post);
-    post.content = `"${post.content.replace(/\n/g, ' ')}"`;
+
+    if(post.votes >= MIN_SCORE){
+        postsMap.set(post.postId, post);
+        post.content = `"${post.content.replace(/\n/g, ' ')}"`;
+    }
 
     
 
