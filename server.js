@@ -79,6 +79,9 @@ function savePostToCSV(post, callback) {
         if(Math.abs(postsMap.get(post.postId).votes - post.votes)==1){
             // Overwrite the existing post data
             postsMap.delete(post.postId);
+            if(post.votes < MIN_SCORE){
+                return -1;
+            }
         }else{
             console.log("Hacker alert");
             return -1;
