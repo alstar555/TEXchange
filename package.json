@@ -13,6 +13,7 @@
     "csv-parse": "^4.4.6",
     "csv-parser": "^3.0.0",
     "ejs": "^3.1.10",
-    "express": "^4.19.2"
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.5.0"
   }
 }
