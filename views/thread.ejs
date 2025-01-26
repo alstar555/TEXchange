@@ -1,0 +1,64 @@
+<!-- threads.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>TEXchange</title>
+   <link rel="icon" type="image/x-icon" href="/logo.ico">
+   <link rel="stylesheet" href="/styles.css">
+   <link rel="stylesheet" href="thread_styles.css">
+
+</head>
+<body>
+   <header>
+       <div class="header-content">
+           <h1>TEXchange</h1>
+           <img src="/logo.png" alt="TEXchange Logo" class="logo">
+       </div>
+   </header>
+
+   <main class="container">
+       <div id="originalPost">
+           <% if (post) { %>
+               <div class="post">
+                   <div class="post-header">
+                       <span class="username"><strong><%= post.userId %></strong></span>
+                       <span class="timestamp"><%= post.timestamp %></span>
+                   </div>
+                   <div class="post-content">
+                       <%= post.content %>
+                   </div>
+                   <div class="vote-container">
+                       <button class="upvote-btn"></button>
+                       <button class="downvote-btn"></button>
+                       <span class="vote-score"><%= post.votes %></span>
+                   </div>
+               </div>
+           <% } %>
+       </div>
+
+       <div id="commentsContainer">
+           <% comments.forEach(comment => { %>
+               <div class="comment">
+                   <div class="comment-header">
+                       <span class="username"><strong><%= comment.userId %></strong></span>
+                       <span class="timestamp"><%= comment.timestamp %></span>
+                   </div>
+                   <div class="comment-content">
+                       <%= comment.content %>
+                   </div>
+               </div>
+           <% }) %>
+       </div>
+
+       <form id="commentForm">
+           <textarea id="commentContent" name="commentContent" required></textarea>
+           <button type="submit">comment</button>
+           <div id="wordCountDisplay">0/1000</div>
+       </form>
+   </main>
+
+   <script src="thread.js"></script>
+</body>
+</html>

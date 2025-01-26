@@ -1,95 +1,164 @@
-h1 {
-    color: red;
-    font-family: 'Proxima Nova', sans-serif;
-}
+/* Modern, professional theme with coral accents */
+body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: #fafafa;
+    color: #2d2d2d;
+    line-height: 1.6;
+ }
+ 
+ .logo {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+ }
 
+ 
+ .header-content {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    height: 50px;
+ }
 
-
-button[type="submit"] {
-    border-radius: 20px;
-    background-color: lightcoral;
-    padding: 5px 10px;
-    color: white;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-button[type="submit"]:hover {
-    background-color: indianred;
-}
-
-textarea {
-    border-radius: 10px;
-    background-color: #ffe6e6;
-    padding: 10px;
-    border: 1px solid #ccc;
-    width: 50%;
-    box-sizing: border-box;
-    resize: vertical;
-}
-
-textarea:focus {
-    background-color: #ffcccc;
-}
-
-/* Position the form at the bottom of the page */
-form#postForm {
-    position: fixed;
-    left: 0;
+ /* Sticky post form */
+ form#postForm {
+    position: sticky;
     bottom: 0;
-    width: 100%;
-    background-color: white; /* Adjust background color if needed */
-    padding: 20px; /* Add padding for better appearance */
-    box-shadow: 0px -5px 10px rgba(0, 0, 0, 0.1); /* Optional: Add shadow for separation */
-}
+    background: white;
+    padding: 1rem;
+    box-shadow: 0 -2px 8px rgba(0,0,0,0.1);
+    z-index: 99;
+ }
+ 
 
+ header {
+    background: white;
+    border-bottom: 1px solid #f0f0f0;
+    padding: 1rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+ }
+ 
+ .header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    height: 50px;
+ }
 
-.username {
-    font-weight: bold;
-}
-
-.timestamp {
-    color: gray;
-}
-
-
-
-/*UP VOTE DOWN VOTE BTNS*/
-
-/* Style the upvote button as a rounded triangle pointing upwards */
-/* Style the upvote button as a triangle pointing upwards */
-.upvote-btn {
-    background-color: lightcoral;
+ h1 {
+    color: #ff7f7f;
+    font-weight: 500;
+    font-size: 2rem;
+ }
+ 
+ .post {
+    background: white;
+    border: 1px solid #eaeaea;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+ }
+ 
+ .username {
+    color: #ff7f7f;
+    font-weight: 500;
+    font-size: 0.95rem;
+ }
+ 
+ .vote-container {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem;
+    border-radius: 8px;
+    background: #fff7f7;
+    width: fit-content;
+ }
+ 
+ .upvote-btn {
+    background-color: #ff9999;
     clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
     border-radius: 0px; /* Rounded corners */
-    width: 16px; /* Adjust width */
-    height: 16px; /* Adjust height */
-    border-width: 0; /* Remove default border */
-    border-style: solid; /* Set border style to solid */
-    border-color: transparent transparent black; /* Set border color (triangle shape) */
-    margin-right: 10000px;
-}
+    width: 20px;
+    height: 20px;
+    transition: background-color 0.2s;
+    border-color: transparent transparent transparent; 
+ }
 
-/* Style the downvote button as a triangle pointing downwards */
-.downvote-btn {
-    background-color: lightcoral;
+ .downvote-btn {
+    background-color: #ff9999;
     clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
     border-radius: 0px; /* Rounded corners */
-    width: 16px; /* Adjust width */
-    height: 16px; /* Adjust height */
-    border-width: 0; /* Remove default border */
-    border-style: solid; /* Set border style to solid */
-    border-color: black transparent transparent; /* Set border color (triangle shape) */
-}
+    width: 20px;
+    height: 20px;
+    transition: background-color 0.2s;
+    border-color: transparent transparent transparent; 
+ }
+ 
+ .upvote-btn:hover, .downvote-btn:hover {
+    background-color: #633838;
+ }
+ 
+ textarea {
+    background: #fff;
+    border: 1px solid #eaeaea;
+    border-radius: 8px;
+    padding: 1rem;
+    width: 100%;
+    font-size: 0.95rem;
+ }
+ 
+ textarea:focus {
+    border-color: #ff9999;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255,153,153,0.2);
+ }
+ 
+ button[type="submit"] {
+    background-color: #ff7f7f;
+    color: white;
+    font-weight: 500;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    transition: all 0.2s;
+ }
+ 
+ button[type="submit"]:hover {
+    background-color: #ff6666;
+    transform: translateY(-1px);
+ }
+ 
+ #postForm, #commentForm {
+    background: white;
+    border-top: 1px solid #eaeaea;
+    padding: 1.5rem;
+ }
+ 
+ .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+ }
 
-/* Change button background color on hover */
-.upvote-btn:hover,
-.downvote-btn:hover {
-    background-color: red; 
-}
+ form#postForm {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: white;
+    padding: 1rem;
+    box-shadow: 0 -2px 8px rgba(0,0,0,0.1);
+    z-index: 99;
+ }
 
+ .container {
+    padding-bottom: 300px;
+ }
 
-#wordCountDisplay {
-    color: gray; /* Light grey color */
-}
+ 

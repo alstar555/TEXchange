@@ -19,9 +19,8 @@ const POST_DB = 'post_db.csv';
 const postsMap = new Map();
 const MIN_SCORE = -5;
 
-const MIN_WORD_COUNT = 20; 
-const MAX_WORD_COUNT = 1000; 
-const MAX_CHAR_COUNT = 2000; 
+const MAX_WORD_COUNT = 1000;
+const MAX_CHAR_COUNT = 2000;
 
 
 // Rate limiting configuration
@@ -86,10 +85,6 @@ app.post('/savePost', (req, res) => {
         res.status(400).json({ error: 'Post content exceeds maximum word count' });
         return;
     }
-    if (checkWordCount(post.content) <= MIN_WORD_COUNT) {
-        res.status(400).json({ error: 'Post content does not meet minimum word count' });
-        return;
-    }
 
     // Only proceed to savePostToCSV if security checks pass
     savePostToCSV(post, (err) => {
@@ -128,7 +123,6 @@ function savePostToCSV(post, callback) {
         post.content = `"${post.content.replace(/\n/g, ' ')}"`;
     }
 
-    
 
     // Convert the posts map back to CSV format
     let csvData = csvHeader;
@@ -155,4 +149,69 @@ app.get('/', (req, res) => {
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}...`);
     console.log(`Click http://localhost:${PORT} to access the Node.js server.`);
+});
+
+// Add to your existing code
+const COMMENTS_DB = 'comments.csv';
+
+app.get('/thread/:postId', (req, res) => {
+    const postId = req.params.postId;
+    const post = postsMap.get(postId);
+    const comments = loadCommentsForPost(postId);
+    res.render('thread', { post, comments });
+});
+
+function loadCommentsForPost(postId) {
+    const comments = [];
+    if (fs.existsSync(COMMENTS_DB)) {
+        fs.createReadStream(COMMENTS_DB)
+            .pipe(csv())
+            .on('data', (row) => {
+                if (row.postId === postId) {
+                    comments.push(row);
+                }
+            });
+    }
+    return comments;
+}
+
+app.post('/thread/:postId/comment', (req, res) => {
+    const comment = {
+        postId: req.params.postId,
+        userId: req.body.userId,
+        content: req.body.content,
+        timestamp: new Date().toISOString(),
+        votes: 1,
+        votedBy: req.body.userId
+    };
+    saveCommentToCSV(comment);
+    res.json({ success: true });
+});
+
+app.get('/thread/:postId', (req, res) => {
+    const postId = req.params.postId;
+    const post = postsMap.get(postId);
+
+    if (!post) {
+        return res.status(404).send('Post not found');
+    }
+
+    // Initialize comments array
+    const comments = [];
+
+    // Check if comments file exists and read it
+    if (fs.existsSync(COMMENTS_DB)) {
+        fs.createReadStream(COMMENTS_DB)
+            .pipe(csv())
+            .on('data', (row) => {
+                if (row.postId === postId) {
+                    comments.push(row);
+                }
+            })
+            .on('end', () => {
+                res.render('thread', { post, comments });
+            });
+    } else {
+        res.render('thread', { post, comments: [] });
+    }
 });
