@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TEX</title>
+    <title>TEXchange</title>
+    <link rel="icon" type="image/x-icon" href="/logo.ico">
     <link rel="stylesheet" href="styles.css">
     <style>
         .container {
@@ -15,12 +16,15 @@
 </head>
 <body>
     <header>
-        <h1>TEXchange</h1>
+        <div class="header-content">
+            <h1>TEXchange</h1>
+            <img src="/logo.png" alt="TEXchange Logo" class="logo">
+        </div>
     </header>
 
     <main class="container">
         <div id="postContainer"></div>
-         
+
         <form id="postForm">
             <textarea id="postContent" name="postContent" required></textarea>
             <button type="submit">post</button>
