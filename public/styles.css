@@ -80,6 +80,12 @@ body {
     background: #fff7f7;
     width: fit-content;
  }
+
+ .vote-score {
+    color: #d68258;
+    font-size: 0.8rem;
+    margin-left: auto;
+ }
  
  .upvote-btn {
     background-color: #ff9999;
@@ -102,7 +108,7 @@ body {
  }
  
  .upvote-btn:hover, .downvote-btn:hover {
-    background-color: #633838;
+    background-color: #ffb342;
  }
  
  textarea {
@@ -161,4 +167,21 @@ body {
     padding-bottom: 300px;
  }
 
+ .timestamp {
+    color: #999;
+    font-size: 0.8rem;
+    margin-left: auto;
+ }
+
+ .post-content a {
+    color: #caa269;
+    text-decoration: none;
+    transition: color 10s;
+    font-size: 30px;
+    font-weight: 600;
+ }
  
+ .post-content a:hover {
+    color: #de4747;
+    text-decoration: underline;
+ }

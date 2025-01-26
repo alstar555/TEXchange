@@ -1,5 +1,4 @@
-const MIN_WORD_COUNT = 20; 
-const MAX_WORD_COUNT = 1000; 
+const MAX_WORD_COUNT = 1000;
 
 document.addEventListener('DOMContentLoaded', function () {
 
@@ -25,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
     postContentTextarea.addEventListener('input', function () {
         const postContent = postContentTextarea.value;
         const wordCount = postContent.split(/\s+/).filter(word => word.length > 0).length;
-        wordCountDisplay.textContent = `${MIN_WORD_COUNT}/${wordCount}/${MAX_WORD_COUNT}`;
+        wordCountDisplay.textContent = `${wordCount}/${MAX_WORD_COUNT}`;
     });
 
 
@@ -35,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const postContent = postContentTextarea.value;
             if(checkWordCount(postContent)){ // Post Must Reach Word count
                 submitPost();
-            }  
+            }
         }
     });
 
@@ -90,51 +89,65 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Function to append post content to the page
     function appendPostToPage(post) {
-
         const postDiv = document.createElement('div');
+        postDiv.classList.add('post');
+
+        const headerDiv = document.createElement('div');
+        headerDiv.classList.add('post-header');
+
         const usernameSpan = document.createElement('span');
         const strongElement = document.createElement('strong');
-        const contentTextNode = document.createTextNode(`${post.content}`);
-        const brElement = document.createElement('br');
-        const timestampSpan = document.createElement('span');
-
         strongElement.textContent = post.userId;
         usernameSpan.classList.add('username');
         usernameSpan.appendChild(strongElement);
 
+        const timestampSpan = document.createElement('span');
         timestampSpan.classList.add('timestamp');
         timestampSpan.textContent = post.timestamp;
 
-        postDiv.appendChild(usernameSpan);
-        postDiv.appendChild(document.createTextNode(': ')); // Add separator between username and content
-        postDiv.appendChild(contentTextNode);
-        postDiv.appendChild(brElement);
-        postDiv.appendChild(timestampSpan);
+        headerDiv.appendChild(usernameSpan);
+        headerDiv.appendChild(document.createTextNode(' '));
+        headerDiv.appendChild(timestampSpan);
 
-        // UP/DOWN votes
+        const contentDiv = document.createElement('div');
+        contentDiv.classList.add('post-content');
+
+        // Create the link element
+        const postLink = document.createElement('a');
+        postLink.href = `/thread/${post.postId}`;
+        postLink.textContent = post.content;
+        postLink.target = "_blank";
+        contentDiv.appendChild(postLink);
+
+        const voteContainer = document.createElement('div');
+        voteContainer.classList.add('vote-container');
+
         const upvoteBtn = document.createElement('button');
         upvoteBtn.classList.add('upvote-btn');
-        upvoteBtn.addEventListener('click', function () {
+        upvoteBtn.addEventListener('click', function() {
             updatePostInfo(postDiv, post, 1);
             sortPostsByVoteScore();
         });
-        postDiv.appendChild(upvoteBtn);
 
         const downvoteBtn = document.createElement('button');
         downvoteBtn.classList.add('downvote-btn');
-        downvoteBtn.addEventListener('click', function () {
+        downvoteBtn.addEventListener('click', function() {
             updatePostInfo(postDiv, post, -1);
             sortPostsByVoteScore();
         });
-        postDiv.appendChild(downvoteBtn);
 
-        // Create the vote score element
         const voteScore = document.createElement('span');
         voteScore.textContent = `${post.votes}`;
         voteScore.classList.add('vote-score');
-        postDiv.appendChild(voteScore); // Append the vote score next to the buttons
 
-        // Append the postDiv to the postContainer
+        voteContainer.appendChild(upvoteBtn);
+        voteContainer.appendChild(downvoteBtn);
+        voteContainer.appendChild(voteScore);
+
+        postDiv.appendChild(headerDiv);
+        postDiv.appendChild(contentDiv);
+        postDiv.appendChild(voteContainer);
+
         postContainer.appendChild(postDiv);
     }
 
@@ -224,10 +237,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function checkWordCount(content){
         const wordCount = content.split(/\s+/).filter(word => word.length > 0).length;
-        if (wordCount < MIN_WORD_COUNT) {
-            alert(`Your post must have at least ${MIN_WORD_COUNT} words.`);
-            return false; // Return false to indicate the word count requirement is not met
-        }
         if (wordCount > MAX_WORD_COUNT) {
             alert(`Your post exceeds word limit of ${MAX_WORD_COUNT} words.`);
             return false; // Return false to indicate the word count requirement is not met
