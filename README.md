@@ -24,7 +24,7 @@ To get started with TEXchange, follow these steps:
    
 ```node server.js```
 
-6. Visit http://localhost:3000 to view the website in your browser.
+6. Visit http://localhost:5000 to view the website in your browser.
 
 ## How to Contribute
 We welcome contributions from everyone! Here’s how you can help:
