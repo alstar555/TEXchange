@@ -1,4 +1,6 @@
 # TEXchange
+![logo](https://github.com/user-attachments/assets/c7f88188-500e-4ec3-a8d5-cb930a0f2705)
+
 TEXchange is an open forum designed for developers to post, exchange, and collaborate on tech ideas. Our vision is to create an open-source platform that empowers developers to share knowledge freely and anonymously.
 
 Our mission:
