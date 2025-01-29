@@ -6,7 +6,7 @@ TEXchange is an open forum designed for developers to post, exchange, and collab
 Our mission:
 1) **Open source** social media platform where anyone can contribute their vision to the platform.
 2) **Anonymous users** with no account ensures the privacy and anonymity of users.
-3) **No content moderation** promotes a safe space for an exchange of ideas.
+3) **Limited content moderation** promotes a safe space for an exchange of ideas.
 
 ## Getting Started
 To get started with TEXchange, follow these steps:
