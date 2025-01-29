@@ -27,13 +27,11 @@ To get started with TEXchange, follow these steps:
 6. Visit http://localhost:5000 to view the website in your browser.
 
 ## How to Contribute
-We welcome contributions from everyone! Here’s how you can help:
+All contributions and feedback are welcome!
 
-Reporting Issues: If you encounter a bug or have a suggestion, please submit an issue on our GitHub repository.
+**Reporting Issues**: Please submit any bugs or suggestions as issue on the GitHub repository.
 
-Code Contributions: Feel free to fork the repository, make your changes, and submit a pull request.
-
-Documentation: Help us improve our documentation by suggesting changes or adding new content.
+**Code Contributions:** Feel free to fork the repository, make your changes, and submit a pull request.
 
 ### Contact
 For questions or suggestions, feel free to reach out:
